@@ -12,9 +12,16 @@ terraform {
     }
   }
 
+  terraform {
+    cloud {
+      organization = "kuratajr"
 
-
-  
+      workspaces {
+        name = "stream-log"
+      }
+    }
+  }
+ 
 
 }
 
