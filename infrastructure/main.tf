@@ -12,13 +12,11 @@ terraform {
     }
   }
 
-  terraform {
-    cloud {
-      organization = "kuratajr"
+  cloud {
+    organization = "kuratajr"
 
-      workspaces {
-        name = "stream-log"
-      }
+    workspaces {
+      name = "stream-log"
     }
   }
  
