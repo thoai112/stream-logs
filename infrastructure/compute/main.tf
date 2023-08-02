@@ -46,16 +46,14 @@ resource "aws_instance" "logs_api_instance" {
     Name = "logs_api_instance"
   }
 
-
-
 }
 
 
-resource "aws_s3_bucket" "logsapicodebucket" {
+resource "aws_s3_bucket_acl" "logsapicodebucket" {
   bucket = var.code_bucket_name
   acl    = "private"
 
   tags = {
-    Name        = "bucketname"
+    Name = "bucketname"
   }
 }
