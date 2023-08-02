@@ -1,0 +1,31 @@
+---
+# tasks file for streamlogs_api
+
+
+
+
+- name: Run the equivalent of "apt-get update" as a separate step
+  apt:
+    update_cache: yes
+- name: Install utils
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - apt-transport-https
+    - software-properties-common
+    - curl
+    - python3-pip
+    - nfs-common
+    - ansible
+- name: Install botocore and boto3
+  pip:
+    name:
+      - botocore
+      - boto3
+    state: present
+
+- include_tasks: install_cloudwatch_agent.yml
+- include_tasks: config_cloudwatch_agent.yml
+- include_tasks: prep_app_folders.yml
+- include_tasks: get_start_app.yml

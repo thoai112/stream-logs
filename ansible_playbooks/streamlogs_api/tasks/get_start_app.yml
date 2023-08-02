@@ -1,0 +1,44 @@
+
+- name: Download app files from S3
+  aws_s3:
+    aws_access_key: "{{ lookup('env', 'AWS_ACCESS_KEY_ID') }}"
+    aws_secret_key: "{{ lookup('env', 'AWS_SECRET_ACCESS_KEY') }}"
+    bucket: "{{ s3_app_bucket }}"
+    object: "{{ item }}"
+    mode: get
+    dest: "/opt/logsapi/{{ item }}"
+  environment:
+    AWS_REGION: "{{ aws_cw_region }}"
+  with_items:
+    - __init__.py
+    - app.py
+    - requirements.txt
+    - gunicorn_conf.py
+
+- name: install python packages
+  shell:
+    cmd: pip install -r requirements.txt
+    chdir: /opt/logsapi
+
+- name: Create api systemd file
+  copy:
+    src: "files/logsapi.service"
+    dest: "/etc/systemd/system/logsapi.service"
+    force: yes
+
+- name: Reload systemd configuration
+  systemd:
+    daemon_reload: yes
+  
+- name: Start api service
+  systemd:
+    name: logsapi
+    state: started
+    enabled: yes
+
+- name: Restart api service
+  systemd:
+    name: logsapi
+    state: restarted
+    enabled: yes
+  

@@ -1,0 +1,32 @@
+
+- name: Get Instance id
+  uri:
+    url: http://169.254.169.254/latest/meta-data/instance-id
+    return_content: yes
+  register: response
+
+- name: Store instance ID in variable
+  set_fact:
+    logs_instance_id: "{{ response.content | trim }}"
+
+- name: Print instance id
+  debug:
+    var: logs_instance_id
+
+- name: copy agent coinfig
+  template:
+    src: templates/cloudwatch-agent-config.json.j2
+    dest: "{{aws_cw_root}}/etc/amazon-cloudwatch-agent.json"
+    mode: 0644
+  vars:
+    instance_id: "{{ logs_instance_id }}"
+
+- name: start cloudwatch agent
+  shell: |
+    ./amazon-cloudwatch-agent-ctl \
+        -a fetch-config \
+        -m ec2 \
+        -c file:{{aws_cw_root}}/etc/amazon-cloudwatch-agent.json \
+        -s
+  args:
+    chdir: "{{aws_cw_root}}/bin"

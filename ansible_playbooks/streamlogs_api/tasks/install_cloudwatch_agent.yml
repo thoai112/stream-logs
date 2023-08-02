@@ -1,0 +1,32 @@
+
+
+- block:
+  - name: setup temp directory for install
+    file:
+      path: /tmp/aws-cw-agent
+      state: directory
+
+  - name: download installer
+    get_url:
+      url: https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb
+      dest: /tmp/aws-cw-agent/cw-agent.deb
+
+  - name: install agent
+    shell: dpkg -i -E /tmp/aws-cw-agent/cw-agent.deb
+      
+  - name: setup agent region
+    blockinfile:
+       path: /root/.aws/config
+       create: true
+       owner: root
+       group: root
+       mode: 0600
+       marker: "# {mark} ansible aws-cloudwatch-agent config"
+       block: |
+        [AmazonCloudWatchAgent]
+        region = {{ aws_cw_region }}
+  
+  - name: remove temp dir
+    file:
+      path: /tmp/aws-cw-agent
+      state: absent

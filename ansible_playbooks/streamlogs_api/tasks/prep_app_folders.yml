@@ -1,0 +1,22 @@
+
+
+- name: Create app directory
+  file:
+    path: "/opt/logsapi"
+    state: directory
+    mode: '0755'
+    owner: root
+
+- name: Create logs directory
+  file:
+    path: "/tmp/logsapi"
+    state: directory
+    mode: '0755'
+    owner: root
+
+- name: Create gunicorn directory
+  file:
+    path: "/tmp/gunicornlogs"
+    state: directory
+    mode: '0755'
+    owner: root

@@ -1,0 +1,7 @@
+
+
+---
+- hosts: logsec2
+  become: true
+  roles:
+    - role: './streamlogs_api'

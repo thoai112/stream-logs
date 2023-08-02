@@ -1,0 +1,8 @@
+---
+# defaults file for streamlogs_api
+
+aws_cw_region: ap-southeast-1
+aws_cw_root: /opt/aws/amazon-cloudwatch-agent
+log_group_name: logs-api-ec2
+log_file_name: /tmp/logsapi/app.log
+s3_app_bucket: <bucket_name>
