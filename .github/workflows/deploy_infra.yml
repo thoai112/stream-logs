@@ -1,8 +1,6 @@
 name: Deploy Infra for Log streaming
-
 on:
   workflow_dispatch:
-
 jobs:
   run_terraform_plan_apply:
     name: Run Terraform Plan
