@@ -1,5 +1,4 @@
 
-
 - name: Create app directory
   file:
     path: "/opt/logsapi"

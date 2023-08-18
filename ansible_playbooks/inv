@@ -1,5 +1,5 @@
 [logsec2]
-13.229.44.13
+ec2-13-212-7-101.ap-southeast-1.compute.amazonaws.com
 [logsec2:vars]
 ansible_user=ubuntu
 ansible_ssh_private_key_file=./ssh_key/id_rsa

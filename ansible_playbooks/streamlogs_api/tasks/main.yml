@@ -1,8 +1,4 @@
 ---
-# tasks file for streamlogs_api
-
-
-
 
 - name: Run the equivalent of "apt-get update" as a separate step
   apt:
