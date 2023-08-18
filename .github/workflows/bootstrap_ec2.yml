@@ -10,8 +10,6 @@ jobs:
       uses: actions/checkout@v2
     - name: Python
       uses: actions/setup-python@v2
-        with:
-          python-version: 3.x  
     - name: Run Ansible playbook
       id: ansible_playh
       run: |
