@@ -1,5 +1,3 @@
-
-
 resource "aws_key_pair" "logsec2_ssh_key" {
   key_name   = "logsec2_ssh_key"
   public_key = file("${path.module}/ssh_key/id_rsa.pub")
@@ -33,7 +31,6 @@ data "aws_ami" "amazon_linux" {
 resource "aws_instance" "logs_api_instance" {
   ami           = data.aws_ami.amazon_linux.id
   instance_type = "t2.micro"
-
   network_interface {
     network_interface_id = resource.aws_network_interface.logsec2_instance_eni_1.id
     device_index         = 0
@@ -41,19 +38,16 @@ resource "aws_instance" "logs_api_instance" {
   availability_zone = "ap-southeast-1a"
   key_name = resource.aws_key_pair.logsec2_ssh_key.key_name
   iam_instance_profile = var.instance_profile_name
-
   tags= {
     Name = "logs_api_instance"
   }
-
 }
 
-
-resource "aws_s3_bucket_acl" "logsapicodebucket" {
+resource "aws_s3_bucket" "logsapicodebucket" {
   bucket = var.code_bucket_name
   acl    = "private"
 
   tags = {
-    Name = "bucketname"
+    Name        = "bucketname"
   }
 }
