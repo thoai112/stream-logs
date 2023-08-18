@@ -8,9 +8,7 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-            actions/setup-python@v2
-      with:
-        python-version: 3.x  
+      uses: actions/setup-python@v2
     - name: Run Ansible playbook
       id: ansible_playh
       run: |
