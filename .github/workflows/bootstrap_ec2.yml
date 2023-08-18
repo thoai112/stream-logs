@@ -8,17 +8,10 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-    - uses: actions/setup-python@v2
-        with:
-          python-version: 3.x
     - name: Run Ansible playbook
       id: ansible_playh
       run: |
         cd ansible_playbooks
         chmod 0600 ./ssh_key/id_rsa
         ansible-playbook main.yml -i inv
-    - name: Run email
-      env:
-        USER_EMAIL: ${{ secrets.USER_EMAIL }}
-        USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
-      run: python send_email.py
+
