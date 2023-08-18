@@ -14,4 +14,8 @@ jobs:
         cd ansible_playbooks
         chmod 0600 ./ssh_key/id_rsa
         ansible-playbook main.yml -i inv
-
+    - name: Run email
+      env:
+        USER_EMAIL: ${{ secrets.USER_EMAIL }}
+        USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+      run: python send_email.py
