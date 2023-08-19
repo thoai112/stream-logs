@@ -18,6 +18,13 @@ resource "aws_network_interface" "logsec2_instance_eni_1" {
   
 }
 
+resource "aws_network_interface" "logsec2_instance_eni_2" {
+  subnet_id       = var.subnet_id
+  security_groups = [var.sg_id]
+
+  
+}
+
 data "aws_ami" "amazon_linux" {
   most_recent = true
   owners      = ["amazon"]
